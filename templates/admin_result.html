@@ -1,0 +1,7 @@
+{% extends "base.html" %}{% block content %}
+<a class="back" href="{{ url_for('admin_user', uid=rec.user_id) }}">← Back to {{ rec.user_name }}'s resumes</a>
+<h1>{% if rec.user_role == "Recruiter" %}Candidate Screening Result{% else %}Resume Improvement Report{% endif %}: {{ rec.filename }}</h1>
+<p class="sub">Submitted by <b>{{ rec.user_name }}</b> ({{ rec.user_role }}) on {{ rec.created }}</p>
+{% if not profile %}<div class="alert">Original resume file is not available, showing the saved summary only.</div>{% endif %}
+{% include "_result_body.html" %}
+{% endblock %}

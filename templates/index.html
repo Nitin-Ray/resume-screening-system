@@ -1,0 +1,11 @@
+{% extends "base.html" %}{% block content %}
+<h1>Resume Screening & Job Matching</h1>
+<p class="sub">{% if session.role == "Recruiter" %}Upload a candidate's resume and paste the job description to get the screening result.{% else %}Upload your resume and paste the job description to get your match % and improvement suggestions.{% endif %}</p>
+<form method="POST" enctype="multipart/form-data" class="card" onsubmit="document.getElementById('btn').innerText='Analyzing...'">
+  <label>Resume (PDF / DOCX)</label>
+  <input type="file" name="resume" accept=".pdf,.docx" required>
+  <label>Job Description</label>
+  <textarea name="jd" rows="10" placeholder="Paste the job description here..." required></textarea>
+  <button id="btn" type="submit">Analyze Resume</button>
+</form>
+{% endblock %}

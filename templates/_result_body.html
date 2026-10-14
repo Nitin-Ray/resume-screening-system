@@ -1,0 +1,17 @@
+<div class="card center">
+  <div class="score {{ 'good' if res.score >= 70 else 'mid' if res.score >= 40 else 'low' }}">{{ res.score }}%</div>
+  <div class="bar"><div class="fill" style="width: {{ res.score }}%"></div></div>
+  {% if res.skill_pct is not none %}<p>Skill Match: <b>{{ res.skill_pct }}%</b> &nbsp;|&nbsp; Text Similarity: <b>{{ res.text_pct }}%</b></p>
+  {% elif res.text_pct is not none %}<p>Text Similarity: <b>{{ res.text_pct }}%</b> &nbsp;(the job description names no skill from the skills list, so only the text is compared)</p>{% endif %}
+</div>
+{% if profile %}
+<div class="card"><h3>Candidate Profile</h3>
+  <p><b>Skills:</b> {{ profile.skills|join(', ') or '-' }}</p>
+  <p><b>Qualifications:</b> {{ profile.qualifications|join(', ') or '-' }}</p>
+  <p><b>Experience:</b> {{ profile.experience }} yrs</p></div>
+{% endif %}
+<div class="grid">
+  <div class="card"><h3>✅ Matched Skills</h3>{% for s in res.matched %}<span class="tag ok">{{ s }}</span>{% else %}<p>None</p>{% endfor %}</div>
+  <div class="card"><h3>❌ Missing Skills</h3>{% for s in res.missing %}<span class="tag bad">{{ s }}</span>{% else %}<p>None 🎉</p>{% endfor %}</div>
+</div>
+<div class="card"><h3>💡 Suggestions</h3><ul>{% for t in tips %}<li>{{ t }}</li>{% endfor %}</ul></div>

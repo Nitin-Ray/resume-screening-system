@@ -1,0 +1,8 @@
+{% extends "base.html" %}{% block content %}
+<h1>Analysis History</h1>
+<div class="card"><table>
+<tr><th>Resume</th><th>Score</th><th>Matched</th><th>Missing</th><th>Date</th></tr>
+{% for r in rows %}<tr><td>{{ r[0] }}</td><td><b>{{ r[1] }}%</b></td><td>{{ r[2] }}</td><td>{{ r[3] }}</td><td>{{ r[4] }}</td></tr>
+{% else %}<tr><td colspan="5">No records found.</td></tr>{% endfor %}
+</table></div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}{% block content %}
+<h1>Admin Dashboard</h1>
+<div class="stats">
+  <div class="card stat"><span>Total Users</span><b>{{ stats.users }}</b></div>
+  <div class="card stat"><span>Resumes Analyzed</span><b>{{ stats.resumes }}</b></div>
+  <div class="card stat"><span>Average Match</span><b class="mid">{{ stats.avg }}%</b></div>
+</div>
+<div class="card">
+  <div class="row-between"><h3>All Users</h3>
+    <input id="q" class="search" type="text" placeholder="Search name / email..." onkeyup="filterRows()"></div>
+  <table id="users">
+    <thead><tr><th>#</th><th>Name</th><th>Role</th><th>Resumes</th><th>Last Active</th><th>Action</th></tr></thead>
+    <tbody>
+    {% for u in users %}
+      <tr><td>{{ loop.index }}</td>
+        <td><b>{{ u.name }}</b><br><small>{{ u.email }}</small></td>
+        <td><span class="pill {{ 'seeker' if u.role == 'Job Seeker' else 'recruiter' }}">{{ u.role }}</span></td>
+        <td><b>{{ u.resumes }}</b></td><td>{{ u.last_active or '-' }}</td>
+        <td><a class="btn small" href="{{ url_for('admin_user', uid=u.id) }}">View</a></td></tr>
+    {% else %}<tr><td colspan="6">No users have registered yet.</td></tr>{% endfor %}
+    </tbody>
+  </table>
+  <p class="sub">Showing {{ users|length }} of {{ users|length }} users</p>
+</div>
+<script>
+function filterRows(){var q=document.getElementById('q').value.toLowerCase();
+document.querySelectorAll('#users tbody tr').forEach(function(r){r.style.display=r.innerText.toLowerCase().indexOf(q)>-1?'':'none';});}
+</script>
+{% endblock %}

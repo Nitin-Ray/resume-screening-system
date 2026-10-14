@@ -1,0 +1,17 @@
+{% extends "base.html" %}{% block content %}
+<a class="back" href="{{ url_for('admin_dashboard') }}">← Back to all users</a>
+<div class="card row-between">
+  <div class="profile-head"><span class="avatar">{{ user.name[0]|upper }}</span>
+    <div><h2>{{ user.name }}</h2><small>{{ user.email }}</small><br>
+    <span class="pill {{ 'seeker' if user.role == 'Job Seeker' else 'recruiter' }}">{{ user.role }}</span></div></div>
+  <div class="mini-stats"><p>Total analyses <b>{{ records|length }}</b></p><p>Average match <b>{{ avg }}%</b></p><p>Joined <b>{{ user.created }}</b></p></div>
+</div>
+<div class="card"><h3>Resumes analyzed by {{ user.name }}</h3>
+<table><thead><tr><th>Resume File</th><th>Match</th><th>Date</th><th>Action</th></tr></thead><tbody>
+{% for r in records %}
+  <tr><td><b>{{ r.filename }}</b></td>
+    <td><span class="pill {{ 'good-bg' if r.score >= 70 else 'mid-bg' if r.score >= 40 else 'low-bg' }}">{{ r.score }}%</span></td>
+    <td>{{ r.created }}</td><td><a class="btn small" href="{{ url_for('admin_result', rid=r.id) }}">View</a></td></tr>
+{% else %}<tr><td colspan="4">This user has not analyzed any resume yet.</td></tr>{% endfor %}
+</tbody></table></div>
+{% endblock %}

@@ -1,0 +1,5 @@
+{% extends "base.html" %}{% block content %}
+<h1>{% if session.role == "Recruiter" %}Candidate Screening Result{% else %}Resume Improvement Report{% endif %}: {{ filename }}</h1>
+{% include "_result_body.html" %}
+<a class="btn" href="{{ url_for('index') }}">← Analyze another</a>
+{% endblock %}
